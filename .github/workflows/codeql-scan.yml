@@ -1,15 +1,9 @@
 name: "CodeQL Security Scan - .NET 8 WebAPI"
 
 on:
-  workflow_dispatch:  # 👈 This allows manual trigger!
-
-  # (optional) you can keep push/pull triggers if you still want automatic too
-  # push:
-  #   branches: [ main ]
-  # pull_request:
-  #   branches: [ main ]
+  workflow_dispatch:  # Manual trigger
   schedule:
-    - cron: '0 0 * * 0'  # weekly scan
+    - cron: '0 0 * * 0'  # Weekly scan
 
 jobs:
   codeql-analysis:
@@ -33,6 +27,7 @@ jobs:
       uses: github/codeql-action/init@v3
       with:
         languages: csharp
+        queries: +security-extended,security-and-quality
 
     - name: Restore dependencies
       run: dotnet restore
